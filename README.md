@@ -1,27 +1,118 @@
-# Signaldesk
+# Signal Desk – Incident Management Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
+Signal Desk is an Angular-based Incident Management Dashboard designed to help users monitor, manage, and track incidents through a clean, responsive interface.
 
-## Development server
+## Project Overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+The application provides an organized view of incidents, including their severity, status, assigned team member, affected service, environment, creation date, and duration.
 
-## Code scaffolding
+## Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Incident Management:** Display incidents in a structured data table.
+- **Search:** Search incidents using relevant information.
+- **Filtering:** Filter incidents by severity, status, service, and environment.
+- **Sorting:** Sort incident records by supported columns.
+- **Pagination:** Navigate through incident records.
+- **Selection:** Select individual or multiple incidents.
+- **Status Indicators:** Visual indicators for incident severity and status.
+- **Responsive UI:** Clean dashboard layout with responsive styling.
+- **API Integration:** Retrieve incident data and filter options through REST API endpoints.
+
+## Technology Stack
+
+- Angular
+- TypeScript
+- HTML5
+- SCSS
+- Angular Material
+- RxJS
+- REST API
+- Git and GitHub
+
+## Project Structure
+
+```text
+signal-desk/
+├── public/
+├── src/
+│   ├── app/
+│   │   ├── components/
+│   │   ├── ...
+│   ├── assets/
+│   ├── styles.scss
+│   └── main.ts
+├── angular.json
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+└── README.md
+```
+
+*Note: The folder structure above is illustrative. Refer to the actual `src/` directory for the complete application structure.*
+
+## Prerequisites
+
+Make sure the following tools are installed:
+
+- Node.js
+- npm
+- Angular CLI
+- Visual Studio Code (recommended)
+
+## Installation and Setup
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/Aman17942/signal-desk.git
+```
+
+**2. Navigate to the project directory**
+
+```bash
+cd signal-desk
+```
+
+**3. Install dependencies**
+
+```bash
+npm install
+```
+
+**4. Start the development server**
+
+```bash
+ng serve
+```
+
+**5. Open the application**
+
+Navigate to:
+
+```text
+http://localhost:4200/
+```
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To create a production build, run:
 
-## Running unit tests
+```bash
+ng build
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The generated build files will be available in the `dist/` directory.
 
-## Running end-to-end tests
+## API Integration
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+The dashboard retrieves incident records and filter options using REST API endpoints.
 
-## Further help
+The application uses API integration to populate incident information and support filtering functionality.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Repository
+
+GitHub: https://github.com/Aman17942/signal-desk
+
+## Author
+
+Developed as an Angular frontend development project.
