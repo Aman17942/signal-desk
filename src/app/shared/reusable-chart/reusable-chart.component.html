@@ -1,0 +1,36 @@
+<div
+  class="signal-chart-box"
+  [class.signal-chart-box--card]="showCard"
+  [class.signal-chart-box--sparkline]="sparkline"
+>
+  <div
+    class="signal-chart-box__header"
+    *ngIf="!sparkline && (title || subtitle)"
+  >
+    <div class="signal-chart-box__titles">
+      <h3 class="signal-chart-box__title" *ngIf="title">{{ title }}</h3>
+      <p class="signal-chart-box__subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+    </div>
+
+    <div class="signal-chart-box__extra">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+  <div class="signal-chart-box__canvas">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [colors]="chartOptions.colors"
+      [stroke]="chartOptions.stroke"
+      [plotOptions]="chartOptions.plotOptions"
+      [fill]="chartOptions.fill"
+      [dataLabels]="chartOptions.dataLabels"
+      [grid]="chartOptions.grid"
+      [xaxis]="chartOptions.xaxis"
+      [yaxis]="chartOptions.yaxis"
+      [legend]="chartOptions.legend"
+      [tooltip]="chartOptions.tooltip"
+    ></apx-chart>
+  </div>
+</div>

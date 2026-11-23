@@ -1,0 +1,58 @@
+<section class="signal-summary-grid" aria-label="Summary metric cards">
+  <article
+    class="signal-summary-card"
+    *ngFor="let card of builtCards; trackBy: trackByCardId"
+  >
+    <div class="signal-summary-card__top">
+      <span class="signal-summary-card__label">{{ card.label }}</span>
+      <button
+        type="button"
+        class="signal-summary-card__more"
+        [attr.aria-label]="card.label + ' actions'"
+        (click)="onCardOptions(card, $event)"
+      >
+        <span class="material-symbols-outlined">more_horiz</span>
+      </button>
+    </div>
+
+    <div
+      class="signal-summary-card__value"
+      [style.color]="card.valueColor || null"
+    >
+      {{ card.value }}
+    </div>
+
+    <div class="signal-summary-card__bottom">
+      <div class="signal-summary-card__meta">
+        <span
+          class="signal-summary-card__delta"
+          [ngClass]="'signal-summary-card__delta--' + card.tone"
+        >
+          {{ card.delta }}
+        </span>
+        <span
+          class="signal-summary-card__comparison"
+          *ngIf="showComparison && card.comparison"
+        >
+          {{ card.comparison }}
+        </span>
+      </div>
+    </div>
+
+    <div
+      class="signal-summary-card__chart"
+      *ngIf="showSparkline && card.sparklineSeries.length > 0"
+    >
+      <app-reusable-chart
+        type="line"
+        [seriesItems]="card.sparklineSeries"
+        [height]="56"
+        [showCard]="false"
+        [showLegend]="false"
+        [sparkline]="true"
+        curve="straight"
+        [strokeWidth]="2"
+      ></app-reusable-chart>
+    </div>
+  </article>
+</section>

@@ -1,0 +1,69 @@
+.signal-chart-box {
+  width: 100%;
+  min-width: 0;
+
+  &--card {
+    padding: 18px 20px;
+    border-radius: 10px;
+    background-color: #121B2D;
+    border: 1px solid rgba(148, 163, 184, 0.14);
+  }
+
+  &--sparkline {
+    display: inline-block;
+    width: 96px;
+    height: 36px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+        border-bottom: 1px solid #1D293E;
+    padding-bottom: 15px;
+    align-items: center;
+  }
+
+  &__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: 16px;
+    line-height: 1.3;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  &__extra {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  &__canvas {
+    width: 100%;
+    min-width: 0;
+
+    .apexcharts-canvas {
+      width: 100% !important;
+    }
+  }
+}
+
+.apexcharts-legend-marker path {
+    stroke: none !important;
+}

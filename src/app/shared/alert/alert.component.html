@@ -1,0 +1,15 @@
+
+<mat-card appearance="outlined" class="signal-alert">
+  <span class="signal-alert__message">{{ message }}</span>
+  <button
+    mat-icon-button
+    type="button"
+    class="signal-alert__close"
+    (click)="onClose()"
+    aria-label="Dismiss alert"
+  >
+    <span class="material-symbols-outlined">
+close
+</span>
+  </button>
+</mat-card>

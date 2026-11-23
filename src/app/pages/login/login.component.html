@@ -1,0 +1,81 @@
+<div class="signal-auth">
+  <main class="signal-auth__main">
+    <mat-card class="signal-auth__card">
+      <app-alert
+        *ngFor="let item of alerts; let i = index"
+        [message]="item"
+        (closed)="dismissAlert(i)"
+      ></app-alert>
+
+      <div class="signal-auth__title">Login</div>
+
+      <form class="signal-form" (ngSubmit)="onLogin()" novalidate>
+        <div class="signal-form__group">
+          <label for="email" class="signal-form__label">
+            Email Address <span class="signal-form__required">*</span>
+          </label>
+          <mat-form-field appearance="outline" class="signal-form__field">
+            <span matTextPrefix class="signal-form__prefix">
+              <span class="material-symbols-outlined">
+              mail
+              </span></span>
+            <input
+              id="email"
+              matInput
+              name="email"
+              type="email"
+              [(ngModel)]="email"
+              placeholder="Please enter email address"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="signal-form__group">
+          <label for="password" class="signal-form__label">
+            Password <span class="signal-form__required"></span>
+          </label>
+          <mat-form-field appearance="outline" class="signal-form__field">
+            <span matTextPrefix class="signal-form__prefix"><span class="material-symbols-outlined">
+lock
+</span></span>
+            <input
+              id="password"
+              matInput
+              name="password"
+              type="password"
+              [(ngModel)]="password"
+              placeholder="Enter your password"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="signal-form__checkbox-row">
+          <mat-checkbox
+            id="rememberMe"
+            name="rememberMe"
+            [(ngModel)]="rememberMe"
+            class="signal-form__checkbox"
+          >
+            <span class="signal-form__checkbox-label">Remember me</span>
+          </mat-checkbox>
+        </div>
+
+        <button
+          mat-flat-button
+          type="submit"
+          class="signal-form__submit"
+          [disabled]="isSubmitting"
+        >
+          <mat-spinner
+            *ngIf="isSubmitting"
+            diameter="20"
+            class="signal-form__spinner"
+          ></mat-spinner>
+          <span *ngIf="!isSubmitting">Sign In</span>
+        </button>
+      </form>
+    </mat-card>
+  </main>
+<app-footer [isAuthMode]="true"></app-footer>
+</div>
+  

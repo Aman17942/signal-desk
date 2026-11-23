@@ -1,0 +1,17 @@
+<header class="signal-page-header">
+  <div class="signal-page-header__left">
+    <h1 class="signal-page-header__title">{{ title }}</h1>
+    <p class="signal-page-header__subtitle" *ngIf="subtitle">
+      <span
+        class="signal-page-header__status-dot"
+        *ngIf="showStatusDot"
+        [style.background-color]="statusDotColor"
+      ></span>
+      <span>{{ subtitle }}</span>
+    </p>
+  </div>
+
+  <div class="signal-page-header__actions">
+    <ng-content></ng-content>
+  </div>
+</header>

@@ -1,0 +1,196 @@
+<app-page-header-strip
+  title="Service observability"
+  subtitle="Deep-dive metrics, dependencies, and endpoint performance"
+>
+  <button type="button" class="signal-filter-btn">
+    <span>Payment Gateway</span>
+    <span class="material-symbols-outlined">expand_more</span>
+  </button>
+  <button type="button" class="signal-filter-btn">
+    <span>Last 24 hours</span>
+    <span class="material-symbols-outlined">expand_more</span>
+  </button>
+</app-page-header-strip>
+ <aside class="signal-ai-summary service-panel" aria-label="AI system summary">
+    <div class="signal-ai-summary__header">
+      <div class="signal-ai-summary__brand">
+        <div class="signal-ai-summary__icon-badge">
+          <span class="material-symbols-outlined">deployed_code</span>
+        </div>
+        
+        <div class="signal-ai-summary__titles custom-title-strip">
+          <h2 class="signal-ai-summary__title">Payment Gateway</h2>
+          <p class="signal-ai-summary__meta">payments-api · Production · us-east-1</p>
+        </div>
+      </div>
+      <div class="button-group">
+              <button type="button" class="signal-ai-summary__cta">
+      <span>View runbook</span>
+    </button>
+    <button type="button" class="signal-ai-summary__cta">
+      <span>Service settings</span>
+    </button>
+      </div>
+
+    </div>
+
+  </aside>
+<!-- <app-summary-cards [cards]="incidentSummaryCardsnew" class="six-grid"></app-summary-cards> -->
+<app-summary-cards
+class="six-grid"
+  [cards]="incidentSummaryCardsnew"
+  [showSparkline]="false"
+  [showComparison]="false"
+></app-summary-cards>
+
+<section class="signal-telemetry-row service-panel" aria-label="System performance and AI summary">
+  <app-reusable-chart
+    class="signal-telemetry-row__chart"
+    title="Request performance"
+    subtitle="Latency, error rate, and throughput over time"
+    type="line"
+    [seriesItems]="systemPerformanceSeries"
+    [categories]="performanceCategories"
+    [height]="320"
+    [showCard]="true"
+    [showLegend]="true"
+    curve="smooth"
+    [strokeWidth]="2"
+  >
+  <ul class="group-number" role="group" aria-label="Time interval selector">
+  <li class="group-number__item">
+    <a href="javascript:void(0)" class="group-number__link">1m</a>
+  </li>
+  <li class="group-number__item group-number__item--active">
+    <a href="javascript:void(0)" class="group-number__link group-number__link--active">5m</a>
+  </li>
+  <li class="group-number__item">
+    <a href="javascript:void(0)" class="group-number__link">15m</a>
+  </li>
+  <li class="group-number__item">
+    <a href="javascript:void(0)" class="group-number__link">1h</a>
+  </li>
+</ul>
+  </app-reusable-chart>
+
+</section>
+<section class="signal-observability-grid" aria-label="Service telemetry breakdown">
+  <!-- 1. Response time distribution -->
+  <article class="signal-chart-box signal-chart-box--card">
+    <div class="signal-chart-box__header">
+      <div class="signal-chart-box__titles">
+        <h3 class="signal-chart-box__title">Response time distribution</h3>
+        <p class="signal-chart-box__subtitle">Requests by latency bucket</p>
+      </div>
+    </div>
+
+    <div class="signal-obs-card__body signal-obs-card__body--chart">
+      <div class="signal-latency-chart">
+        <div
+          class="signal-latency-chart__bar-col"
+          *ngFor="let bucket of latencyBuckets; trackBy: trackByBucket"
+        >
+          <div class="signal-latency-chart__bar-track">
+            <div
+              class="signal-latency-chart__bar"
+              [style.height.%]="bucket.percent"
+            ></div>
+          </div>
+          <span class="signal-latency-chart__label">{{ bucket.label }}</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 2. Error breakdown -->
+  <article class="signal-chart-box signal-chart-box--card">
+    <div class="signal-chart-box__header">
+      <div class="signal-chart-box__titles">
+        <h3 class="signal-chart-box__title">Error breakdown</h3>
+        <p class="signal-chart-box__subtitle">By HTTP status code</p>
+      </div>
+    </div>
+
+    <div class="signal-obs-card__body">
+      <ul class="signal-error-list">
+        <li
+          class="signal-error-list__item"
+          *ngFor="let err of errorBreakdown; trackBy: trackByStatus"
+        >
+          <span class="signal-error-list__code">{{ err.code }}</span>
+
+          <div class="signal-error-list__content">
+            <div class="signal-error-list__top">
+              <span class="signal-error-list__name">{{ err.label }}</span>
+              <span class="signal-error-list__pct">{{ err.percentage }}%</span>
+            </div>
+
+            <div class="signal-error-list__track">
+              <div
+                class="signal-error-list__fill"
+                [ngClass]="'signal-error-list__fill--' + err.tone"
+                [style.width.%]="err.percentage"
+              ></div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- 3. Service dependencies -->
+  <article class="signal-chart-box signal-chart-box--card">
+    <div class="signal-chart-box__header">
+      <div class="signal-chart-box__titles">
+        <h3 class="signal-chart-box__title">Service dependencies</h3>
+        <p class="signal-chart-box__subtitle">Live dependency health</p>
+      </div>
+    </div>
+
+    <div class="signal-obs-card__body signal-obs-card__body--deps">
+      <div class="signal-dep-map">
+        <svg
+          class="signal-dep-map__lines"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <line x1="22" y1="22" x2="50" y2="50" class="signal-dep-map__line" />
+          <line x1="78" y1="22" x2="50" y2="50" class="signal-dep-map__line" />
+          <line x1="22" y1="78" x2="50" y2="50" class="signal-dep-map__line" />
+          <line x1="78" y1="78" x2="50" y2="50" class="signal-dep-map__line" />
+        </svg>
+
+        <div
+          class="signal-dep-node"
+          *ngFor="let node of serviceDependencies; trackBy: trackByNodeId"
+          [ngClass]="[
+            'signal-dep-node--' + node.position,
+            node.status === 'critical' ? 'signal-dep-node--critical' : ''
+          ]"
+        >
+          <span class="signal-dep-node__name">{{ node.name }}</span>
+          <span class="signal-dep-node__latency">{{ node.latency }}</span>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+<mat-card class="signal-incident-feed" appearance="outlined">
+    <mat-card-header class="signal-incident-feed__header">
+      <div
+    class="signal-chart-box__header health-header">
+    <div class="signal-chart-box__titles">
+      <h3 class="signal-chart-box__title">Endpoint performance</h3>
+      <p class="signal-chart-box__subtitle">Top endpoints by request volume</p>
+    </div>
+
+     <div class="button-group">
+              <button type="button" class="signal-ai-summary__cta">
+      <span>Export CSV</span>
+    </button>
+      </div>
+  </div>
+  </mat-card-header>
+<app-endpoint-table ></app-endpoint-table>
+</mat-card>

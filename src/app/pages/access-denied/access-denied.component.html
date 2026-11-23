@@ -1,0 +1,17 @@
+<div class="signal-denied">
+  <mat-card class="signal-denied__card">
+    <span class="signal-denied__badge">403 — Access Denied</span>
+    <h1 class="signal-denied__title">Unauthorized Access</h1>
+    <p class="signal-denied__text">
+      Your role does not have permission to view this page.
+    </p>
+    <button
+      mat-flat-button
+      type="button"
+      class="signal-denied__btn"
+      (click)="goBack()"
+    >
+      Go to Allowed Page
+    </button>
+  </mat-card>
+</div>

@@ -1,0 +1,103 @@
+<!-- <mat-card class="signal-incident-feed" appearance="outlined">
+  <mat-card-header class="signal-incident-feed__header">
+      <div
+    class="signal-chart-box__header health-header">
+    <div class="signal-chart-box__titles">
+      <h3 class="signal-chart-box__title">Live incident feed</h3>
+      <p class="signal-chart-box__subtitle">Recent activity across all production services</p>
+    </div>
+
+    <div class="signal-chart-box__extra">
+      <a
+      routerLink=""
+      class="signal-telemetry-row__view-link"
+    >
+      <span>View all incidents</span>
+      <span class="material-symbols-outlined">chevron_right</span>
+    </a>
+    </div>
+  </div>
+  </mat-card-header>
+
+  <mat-card-content class="signal-incident-feed__body">
+    <mat-list class="signal-incident-feed__list">
+      <mat-list-item
+        class="signal-incident-feed__row"
+        *ngFor="let incident of builtIncidents; trackBy: trackByIncidentId"
+      >
+        <div class="signal-incident-feed__row-inner">
+          <div class="signal-incident-feed__left">
+            <span
+              class="signal-incident-feed__bar"
+              [style.backgroundColor]="incident.barColor"
+            ></span>
+            <span class="signal-incident-feed__code">{{ incident.code }}</span>
+            <span class="signal-incident-feed__summary">
+              {{ incident.summary }}
+            </span>
+          </div>
+
+          <div class="signal-incident-feed__right">
+            <mat-chip
+              class="signal-incident-feed__pill"
+              [style.--signal-pill-color]="incident.severityColor"
+              disableRipple
+            >
+              {{ incident.severityLabel }}
+            </mat-chip>
+
+            <span class="signal-incident-feed__service">{{ incident.service }}</span>
+            <span class="signal-incident-feed__time">{{ incident.timestamp }}</span>
+
+            <mat-chip
+              class="signal-incident-feed__pill"
+              [style.--signal-pill-color]="incident.statusColor"
+              disableRipple
+            >
+              {{ incident.statusLabel }}
+            </mat-chip>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card> -->
+
+<mat-card-content class="inc-feed__body">
+  <mat-list class="inc-feed__list">
+    <mat-list-item
+      class="inc-feed__row"
+      *ngFor="let item of builtIncidents"
+      (click)="selectIncident(item)"
+    >
+      <div class="inc-feed__item">
+        <span
+          class="inc-feed__bar"
+          [style.backgroundColor]="item.barColor"
+        ></span>
+
+        <span class="inc-feed__code">{{ item.code }}</span>
+        <span class="inc-feed__title">{{ item.title }}</span>
+
+        <mat-chip
+          class="inc-feed__chip"
+          [style.--inc-chip-color]="item.severityColor"
+          disableRipple
+        >
+          {{ item.severity }}
+        </mat-chip>
+
+        <span class="inc-feed__service">{{ item.service }}</span>
+        <span class="inc-feed__time">{{ item.timestamp }}</span>
+
+        <mat-chip
+          class="inc-feed__chip"
+          [style.--inc-chip-color]="item.statusColor"
+          disableRipple
+        >
+          {{ item.status }}
+        </mat-chip>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</mat-card-content>

@@ -1,0 +1,109 @@
+<div class="signal-sidebar__inner">
+  <div class="signal-sidebar__brand">
+    <div class="signal-sidebar__brand-badge">
+      <span class="material-symbols-outlined">signal_cellular_alt</span>
+    </div>
+    <span class="signal-sidebar__brand-name">SignalDesk</span>
+  </div>
+
+  <div class="signal-sidebar__workspace">
+    <button
+      type="button"
+      class="signal-sidebar__workspace-card"
+      [matMenuTriggerFor]="workspaceMenu"
+      aria-label="Workspace switcher"
+    >
+      <div class="signal-sidebar__workspace-avatar">{{ selectedWorkspace.initials }}</div>
+      <div class="signal-sidebar__workspace-info">
+        <span class="signal-sidebar__workspace-name">{{ selectedWorkspace.name }}</span>
+        <span class="signal-sidebar__workspace-plan">{{ selectedWorkspace.plan }}</span>
+      </div>
+      <span class="material-symbols-outlined signal-sidebar__workspace-chev">expand_more</span>
+    </button>
+
+    <mat-menu #workspaceMenu="matMenu" class="signal-menu signal-menu--workspace">
+      <button
+        mat-menu-item
+        type="button"
+        *ngFor="let ws of workspaces"
+        (click)="selectWorkspace(ws)"
+        [class.signal-menu__item--active]="ws.name === selectedWorkspace.name"
+      >
+        <div class="signal-menu__workspace-item">
+          <span class="signal-menu__workspace-initials">{{ ws.initials }}</span>
+          <div class="signal-menu__workspace-meta">
+            <span class="signal-menu__workspace-name">{{ ws.name }}</span>
+            <span class="signal-menu__workspace-plan">{{ ws.plan }}</span>
+          </div>
+        </div>
+      </button>
+    </mat-menu>
+  </div>
+
+  <div class="signal-sidebar__section-label">WORKSPACE</div>
+
+  <mat-nav-list class="signal-sidebar__nav">
+    <a
+      mat-list-item
+      *ngIf="isAdmin"
+      routerLink="/command-center"
+      routerLinkActive="signal-sidebar__link--active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="signal-sidebar__link"
+    >
+      <span class="material-symbols-outlined signal-sidebar__icon">grid_view</span>
+      <span class="signal-sidebar__label">Command Center</span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/incidents"
+      routerLinkActive="signal-sidebar__link--active"
+      class="signal-sidebar__link"
+    >
+      <span class="material-symbols-outlined signal-sidebar__icon">warning</span>
+      <span class="signal-sidebar__label">Incidents</span>
+      <span
+        class="signal-sidebar__badge"
+        *ngIf="activeIncidentsCount !== null && activeIncidentsCount > 0"
+      >
+        {{ activeIncidentsCount }}
+      </span>
+    </a>
+
+    <a
+      mat-list-item
+      routerLink="/services"
+      routerLinkActive="signal-sidebar__link--active"
+      class="signal-sidebar__link"
+    >
+      <span class="material-symbols-outlined signal-sidebar__icon">layers</span>
+      <span class="signal-sidebar__label">Services</span>
+    </a>
+  </mat-nav-list>
+
+  <div class="signal-sidebar__footer" *ngIf="authService.getCurrentUser() as user">
+    <div class="signal-sidebar__profile">
+      <div class="signal-sidebar__avatar">MC</div>
+      <div class="signal-sidebar__profile-info">
+        <span class="signal-sidebar__profile-email">Maya Chen</span>
+        <span class="signal-sidebar__profile-role">Platform Engineering</span>
+      </div>
+      <span class="material-symbols-outlined signal-sidebar__profile-more">more_horiz</span>
+    </div>
+
+    <div class="signal-sidebar__quota">
+      <div class="signal-sidebar__quota-header">
+        <span class="signal-sidebar__quota-title">Events this month</span>
+        <span class="signal-sidebar__quota-pct">{{ usagePercent }}%</span>
+      </div>
+      <div class="signal-sidebar__quota-sub">{{ usageSummaryText }}</div>
+      <div class="signal-sidebar__quota-track">
+        <div
+          class="signal-sidebar__quota-fill"
+          [style.width.%]="usagePercent"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>

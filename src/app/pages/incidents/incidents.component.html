@@ -1,0 +1,254 @@
+<app-page-header-strip
+  title="Incidents"
+  subtitle="8 active across production services · 3 require attention"
+>
+  <button type="button" class="signal-btn signal-btn--primary">
+    <span class="material-symbols-outlined">add</span>
+    <span>Create incident</span>
+  </button>
+</app-page-header-strip>
+
+<div class="inc-page">
+  <div class="inc-page__toolbar">
+    <mat-form-field appearance="outline" class="inc-page__search">
+      <span class="material-symbols-outlined">search</span>
+      <input
+        matInput
+        placeholder="Search by ID or incident title..."
+        [(ngModel)]="search"
+        (ngModelChange)="applyFilters()"
+      />
+    </mat-form-field>
+
+    <div class="inc-page__filters">
+      <mat-form-field appearance="outline" class="inc-page__pill-select">
+        <mat-select
+          placeholder="All severities"
+          [(ngModel)]="severity"
+          (selectionChange)="applyFilters()"
+        >
+          <mat-option value="">All severities</mat-option>
+          <mat-option *ngFor="let item of filterOptions.severities" [value]="item">
+            {{ item }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="inc-page__pill-select">
+        <mat-select
+          placeholder="All statuses"
+          [(ngModel)]="status"
+          (selectionChange)="applyFilters()"
+        >
+          <mat-option value="">All statuses</mat-option>
+          <mat-option *ngFor="let item of filterOptions.statuses" [value]="item">
+            {{ item }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="inc-page__pill-select">
+        <mat-select
+          placeholder="All services"
+          [(ngModel)]="service"
+          (selectionChange)="applyFilters()"
+        >
+          <mat-option value="">All services</mat-option>
+          <mat-option *ngFor="let item of filterOptions.services" [value]="item">
+            {{ item }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="inc-page__pill-select">
+        <mat-select
+          placeholder="All environments"
+          [(ngModel)]="environment"
+          (selectionChange)="applyFilters()"
+        >
+          <mat-option value="">All environments</mat-option>
+          <mat-option *ngFor="let item of filterOptions.environments" [value]="item">
+            {{ item }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="inc-page__pill-select">
+        <mat-icon matPrefix class="inc-page__filter-icon">
+          <span class="material-symbols-outlined">filter_alt</span>
+        </mat-icon>
+        <mat-select [(ngModel)]="dateWindow" (selectionChange)="applyFilters()">
+          <mat-option value="all">All time</mat-option>
+          <mat-option value="7d">Last 7 days</mat-option>
+          <mat-option value="30d">Last 30 days</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="inc-page__card">
+    <div *ngIf="loading" class="inc-page__state">
+      <mat-spinner diameter="26"></mat-spinner>
+      Loading incidents...
+    </div>
+
+    <div *ngIf="error && !loading" class="inc-page__state inc-page__state--error">
+      {{ error }}
+    </div>
+
+    <mat-card-content class="ep-table__body" *ngIf="!loading && !error">
+      <table
+        mat-table
+        [dataSource]="pagedRows"
+        matSort
+        (matSortChange)="sortData($event)"
+        class="ep-table__grid inc-page__table"
+      >
+        <!-- Select -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              [checked]="isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              (change)="toggleAll()"
+            ></mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              [checked]="selection.isSelected(row)"
+              (click)="$event.stopPropagation()"
+              (change)="selection.toggle(row)"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- Incident ID -->
+        <ng-container matColumnDef="code">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>INCIDENT ID</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="inc-page__code">{{ row.code }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Incident Title -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>INCIDENT TITLE</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="inc-page__title">{{ row.title }}</div>
+            <div class="inc-page__env">{{ row.environment }}</div>
+          </td>
+        </ng-container>
+
+        <!-- Severity -->
+        <ng-container matColumnDef="severity">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>SEVERITY</th>
+          <td mat-cell *matCellDef="let row">
+            <mat-chip
+              class="inc-page__badge"
+              [style.--inc-badge]="getSeverityColor(row.severity)"
+              disableRipple
+            >
+              {{ row.severity }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Service -->
+        <ng-container matColumnDef="service">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>AFFECTED SERVICE</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="inc-page__muted">{{ row.service }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Assignee -->
+        <ng-container matColumnDef="assignedTo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ASSIGNED TO</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="inc-page__assignee">
+              <span class="inc-page__avatar">{{ getInitials(row.assignedTo) }}</span>
+              <span class="inc-page__muted">{{ row.assignedTo }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Created Date -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>CREATED</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="inc-page__muted">{{ row.createdAt }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Duration -->
+        <ng-container matColumnDef="duration">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>DURATION</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="inc-page__muted">{{ row.duration }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>STATUS</th>
+          <td mat-cell *matCellDef="let row">
+            <mat-chip
+              class="inc-page__badge"
+              [style.--inc-badge]="getStatusColor(row.status)"
+              disableRipple
+            >
+              {{ row.status }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+
+        <tr *matNoDataRow>
+          <td class="inc-page__empty" [attr.colspan]="columns.length">
+            No incidents found.
+          </td>
+        </tr>
+      </table>
+    </mat-card-content>
+
+    <div class="inc-page__footer" *ngIf="!loading && !error">
+      <div class="inc-page__summary">{{ rangeLabel }}</div>
+
+      <div class="inc-page__pager-controls">
+        <span class="inc-page__per-page-label">Rows per page</span>
+
+        <mat-form-field appearance="outline" class="inc-page__per-page-select">
+          <mat-select [(ngModel)]="pageSize" (selectionChange)="onPageSizeChange()">
+            <mat-option [value]="10">10</mat-option>
+            <mat-option [value]="25">25</mat-option>
+            <mat-option [value]="50">50</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          type="button"
+          class="inc-page__page-btn"
+          [disabled]="pageIndex === 0 || !totalCount"
+          (click)="goToPage(pageIndex - 1)"
+        >
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+
+        <button class="inc-page__page-btn is-active">
+          {{ pageIndex + 1 }}
+        </button>
+
+        <button
+          type="button"
+          class="inc-page__page-btn"
+          [disabled]="pageIndex >= pageCount - 1 || !totalCount"
+          (click)="goToPage(pageIndex + 1)"
+        >
+          <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<app-page-header-strip
+  title="Command Center"
+  subtitle="Production Operational · Updated 12 seconds ago"
+  [showStatusDot]="true"
+>
+  <div class="signal-range-group">
+    <button type="button" class="signal-range-group__btn">Last 15 min</button>
+    <button type="button" class="signal-range-group__btn signal-range-group__btn--active">
+      1 hour
+    </button>
+    <button type="button" class="signal-range-group__btn">24 hours</button>
+    <button type="button" class="signal-range-group__btn">7 days</button>
+  </div>
+</app-page-header-strip>
+
+<app-summary-cards [cards]="summaryCards"></app-summary-cards>
+
+<section class="signal-telemetry-row" aria-label="System performance and AI summary">
+  <app-reusable-chart
+    class="signal-telemetry-row__chart"
+    title="System performance"
+    subtitle="Cross-service signals · 1 hour"
+    type="line"
+    [seriesItems]="systemPerformanceSeries"
+    [categories]="performanceCategories"
+    [height]="320"
+    [showCard]="true"
+    [showLegend]="true"
+    curve="smooth"
+    [strokeWidth]="2"
+  >
+    <a
+      routerLink="/service-observability"
+      class="signal-telemetry-row__view-link"
+    >
+      <span>View metrics</span>
+      <span class="material-symbols-outlined">chevron_right</span>
+    </a>
+  </app-reusable-chart>
+
+  <aside class="signal-ai-summary" aria-label="AI system summary">
+    <div class="signal-ai-summary__header">
+      <div class="signal-ai-summary__brand">
+        <div class="signal-ai-summary__icon-badge">
+          <span class="material-symbols-outlined">settings</span>
+        </div>
+        
+        <div class="signal-ai-summary__titles custom-title-strip">
+          <h2 class="signal-ai-summary__title">AI system summary</h2>
+          <p class="signal-ai-summary__meta">Generated 1 min ago</p>
+        </div>
+      </div>
+
+      <span class="signal-ai-summary__live-badge">Live</span>
+    </div>
+
+    <div class="signal-ai-summary__anomaly">
+      <div class="signal-ai-summary__anomaly-head">
+        <span class="signal-ai-summary__anomaly-dot"></span>
+        <h3 class="signal-ai-summary__anomaly-title">Payment latency anomaly</h3>
+      </div>
+      <p class="signal-ai-summary__anomaly-body">
+        Payment Gateway p95 latency is
+        <strong class="signal-ai-summary__anomaly-highlight">3.4× above baseline</strong>,
+        correlated with database pool saturation.
+      </p>
+    </div>
+
+    <ul class="signal-ai-summary__findings">
+      <li class="signal-ai-summary__finding">
+        <span class="signal-ai-summary__finding-num">01</span>
+        <p class="signal-ai-summary__finding-text">
+          Error rate increased from <strong>0.8% to 2.4%</strong> over 18 minutes.
+        </p>
+      </li>
+      <li class="signal-ai-summary__finding">
+        <span class="signal-ai-summary__finding-num">02</span>
+        <p class="signal-ai-summary__finding-text">
+          Notification retries are creating elevated queue depth.
+        </p>
+      </li>
+      <li class="signal-ai-summary__finding">
+        <span class="signal-ai-summary__finding-num">03</span>
+        <p class="signal-ai-summary__finding-text">
+          No correlated deployment detected in the affected window.
+        </p>
+      </li>
+    </ul>
+
+    <button type="button" class="signal-ai-summary__cta">
+      <span>Open investigation</span>
+      <span class="material-symbols-outlined">chevron_right</span>
+    </button>
+  </aside>
+</section>
+<app-service-health></app-service-health>
+
+<mat-card class="signal-incident-feed" appearance="outlined">
+    <mat-card-header class="signal-incident-feed__header">
+      <div
+    class="signal-chart-box__header health-header">
+    <div class="signal-chart-box__titles">
+      <h3 class="signal-chart-box__title">Live incident feed</h3>
+      <p class="signal-chart-box__subtitle">Recent activity across all production services</p>
+    </div>
+
+     <div class="signal-chart-box__extra">
+      <a
+      routerLink=""
+      class="signal-telemetry-row__view-link"
+    >
+      <span>View all incidents</span>
+      <span class="material-symbols-outlined">chevron_right</span>
+    </a>
+    </div>
+  </div>
+  </mat-card-header>
+<app-incident-list></app-incident-list>
+</mat-card>

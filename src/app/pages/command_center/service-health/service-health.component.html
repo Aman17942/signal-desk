@@ -1,0 +1,75 @@
+<section class="signal-service-health" aria-label="Service health">
+      <div
+    class="signal-chart-box__header health-header">
+    <div class="signal-chart-box__titles">
+      <h3 class="signal-chart-box__title">Service health</h3>
+      <p class="signal-chart-box__subtitle">8 critical production services</p>
+    </div>
+
+    <div class="signal-chart-box__extra">
+      <a
+      routerLink=""
+      class="signal-telemetry-row__view-link"
+    >
+      <span>View all services</span>
+      <span class="material-symbols-outlined">chevron_right</span>
+    </a>
+    </div>
+  </div>
+  <div class="signal-service-health__grid">
+    <article
+      class="signal-service-card"
+      *ngFor="let service of builtServices; trackBy: trackByServiceId"
+    >
+      <div class="signal-service-card__top">
+        <div class="signal-service-card__title-group">
+          <span class="signal-service-card__icon-box">
+            <span class="material-symbols-outlined">deployed_code</span>
+          </span>
+          <h3 class="signal-service-card__name">{{ service.name }}</h3>
+        </div>
+
+        <button
+          type="button"
+          class="signal-service-card__more"
+          [attr.aria-label]="service.name + ' options'"
+          (click)="onServiceAction(service, $event)"
+        >
+          <span class="material-symbols-outlined">more_horiz</span>
+        </button>
+      </div>
+
+      <div class="signal-service-card__status-row">
+        <div
+          class="signal-service-card__status"
+          [ngClass]="'signal-service-card__status--' + service.status"
+        >
+          <span class="signal-service-card__status-dot"></span>
+          <span class="signal-service-card__status-text">{{ service.statusLabel }}</span>
+        </div>
+
+        <span class="signal-service-card__latency">{{ service.latency }}</span>
+      </div>
+
+      <div class="signal-service-card__chart">
+        <app-reusable-chart
+          type="line"
+          [seriesItems]="service.chartSeries"
+          [height]="64"
+          [showCard]="false"
+          [showLegend]="false"
+          [sparkline]="true"
+          curve="straight"
+          [strokeWidth]="2"
+        ></app-reusable-chart>
+      </div>
+
+      <div class="signal-service-card__footer">
+        <span class="signal-service-card__error">
+          Error <strong>{{ service.errorRate }}</strong>
+        </span>
+        <span class="signal-service-card__deployed">{{ service.deployedText }}</span>
+      </div>
+    </article>
+  </div>
+</section>

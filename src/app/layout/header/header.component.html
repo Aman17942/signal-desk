@@ -1,0 +1,110 @@
+<mat-toolbar class="signal-header" [class.signal-header--auth]="isAuthMode">
+  <div class="signal-header__left">
+    <div class="signal-header__brand" *ngIf="isAuthMode">
+      <div class="signal-header__brand-badge">
+        <span class="material-symbols-outlined">signal_cellular_alt</span>
+      </div>
+      <span class="signal-header__brand-name">SignalDesk</span>
+    </div>
+
+    <nav class="signal-header__breadcrumb" *ngIf="!isAuthMode" aria-label="Breadcrumb">
+      <span class="signal-header__breadcrumb-parent">Northstar Labs</span>
+      <span class="material-symbols-outlined signal-header__breadcrumb-sep">chevron_right</span>
+      <span class="signal-header__breadcrumb-current">{{ currentPageTitle }}</span>
+    </nav>
+  </div>
+
+  <div class="signal-header__status" *ngIf="isAuthMode">
+    <span class="material-symbols-outlined">lock</span>
+    <span>Secure Access</span>
+  </div>
+
+  <div
+    class="signal-header__actions"
+    *ngIf="!isAuthMode && authService.getCurrentUser() as user"
+  >
+    <form class="signal-header__search" (ngSubmit)="onSearchSubmit()">
+      <span class="material-symbols-outlined signal-header__search-icon">search</span>
+      <input
+        type="text"
+        name="headerSearch"
+        [(ngModel)]="searchQuery"
+        placeholder="Search incidents, services, traces..."
+        class="signal-header__search-input"
+        aria-label="Search incidents, services, traces"
+      />
+      <span class="signal-header__shortcut">⌘ K</span>
+    </form>
+
+    <button
+      type="button"
+      class="signal-header__env"
+      [matMenuTriggerFor]="envMenu"
+    >
+      <span class="signal-header__env-label">{{ selectedEnvironment }}</span>
+      <span class="material-symbols-outlined signal-header__env-caret">expand_more</span>
+    </button>
+    <mat-menu #envMenu="matMenu" class="signal-menu">
+      <button
+        mat-menu-item
+        type="button"
+        *ngFor="let env of environments"
+        (click)="selectEnvironment(env)"
+        [class.signal-menu__item--active]="env === selectedEnvironment"
+      >
+        <span>{{ env }}</span>
+      </button>
+    </mat-menu>
+
+    <button
+      type="button"
+      class="signal-header__live-pill"
+      [matMenuTriggerFor]="windowMenu"
+    >
+      <span class="signal-header__live-dot"></span>
+      <span>{{ selectedWindow }}</span>
+      <span class="material-symbols-outlined signal-header__live-caret">expand_more</span>
+    </button>
+    <mat-menu #windowMenu="matMenu" class="signal-menu">
+      <button
+        mat-menu-item
+        type="button"
+        *ngFor="let win of timeWindows"
+        (click)="selectWindow(win)"
+        [class.signal-menu__item--active]="win === selectedWindow"
+      >
+        <span>{{ win }}</span>
+      </button>
+    </mat-menu>
+
+    <button
+      type="button"
+      class="signal-header__icon-btn"
+      aria-label="Notifications"
+    >
+      <span class="material-symbols-outlined">notifications</span>
+      <span class="signal-header__notif-dot"></span>
+    </button>
+
+    <button
+      type="button"
+      class="signal-header__avatar-btn"
+      [matMenuTriggerFor]="profileMenu"
+      aria-label="Account menu"
+    >
+      MC
+    </button>
+
+    <mat-menu #profileMenu="matMenu" class="signal-menu signal-menu--profile">
+      <button
+        mat-menu-item
+        type="button"
+        class="signal-menu__logout"
+        (click)="onLogout()"
+      >
+        <span class="material-symbols-outlined">logout</span>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
