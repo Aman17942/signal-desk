@@ -93,7 +93,7 @@ body {
     overflow: hidden !important;
 
     .mat-drawer-inner-container {
-      display: flex !important;
+      // display: flex !important;
       width: 240px !important;
       max-width: 100% !important;
       height: 100% !important;
@@ -237,11 +237,12 @@ body {
     }
 
     &--primary {
-      background-color: #6366f1;
+      background-color: #7C8CFF;
       color: #ffffff;
+      border: 1px solid #8D9AFF;
 
       &:hover {
-        background-color: #4f46e5;
+        background-color: #6f7ad3;
       }
     }
   }
@@ -320,9 +321,9 @@ body {
     }
 
     &__subtitle {
-      font-size: 12.5px;
+      font-size: 12px;
       line-height: 1.4;
-      color: #94a3b8;
+      color: #64748B;
       margin: 0;
     }
 
@@ -416,6 +417,15 @@ body {
       gap: 10px;
       min-width: 0;
     }
+    &__degraded-badge{
+          font-size: 12px;
+          background: #3C1F2A;
+          border: 1px solid #672D38;
+          border-radius: 6px;
+          padding: 0px 10px;
+          color: #FF9090;
+          margin-left: 4px;
+    }
 
     &__icon-badge {
       display: inline-flex;
@@ -424,8 +434,8 @@ body {
       width: 32px;
       height: 32px;
       border-radius: 8px;
-      background-color: #252B51;
-      color: #818cf8;
+      background-color: #202A45;
+      color: #9BA7FF;
       flex-shrink: 0;
 
       .material-symbols-outlined {
@@ -556,7 +566,7 @@ body {
       height: 36px;
       padding: 0 14px;
       border-radius: 8px;
-      background-color: #141c2e;
+      background-color: #172136;
       border: 1px solid rgba(148, 163, 184, 0.14);
       color: #e2e8f0;
       font-size: 12.5px;
@@ -980,6 +990,9 @@ app-header {
     padding: 0 !important;
     border-bottom: 1px solid rgba(148, 163, 184, 0.08);
     cursor: pointer;
+    &:first-child {
+    border-top: 1px solid rgba(148, 163, 184, 0.08);
+}
 
     &:last-child {
       border-bottom: none;
@@ -1069,7 +1082,8 @@ app-header {
 
     .mat-mdc-header-row {
       height: 44px;
-      background-color: rgba(15, 23, 42, 0.65);
+    background-color: rgba(15, 23, 42, 0.65);
+    border: 1px solid #1D293E;
     }
 
     .mat-mdc-header-cell {
@@ -1080,7 +1094,10 @@ app-header {
       color: #6f7d93;
       border-bottom: 1px solid rgba(148, 163, 184, 0.1);
       white-space: nowrap;
-
+font-weight: 500;
+.mdc-checkbox__background{
+          border: 1px solid #40506B !important;
+         }
 
     }
 
@@ -1101,10 +1118,12 @@ app-header {
 
     .mat-mdc-cell {
       padding: 0 20px;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+      border-bottom: 1px solid #1D293E;
       white-space: nowrap;
       font-weight: normal;
-         
+         .mdc-checkbox__background{
+          border: 1px solid #40506B !important;
+         }
     }
   }
 
@@ -1186,7 +1205,7 @@ p {
     p{
         font-size: 12px;
     line-height: 1.4;
-    color: #94a3b8;
+    color: #64748B;
     margin: 0;
     }
 }
@@ -1233,6 +1252,8 @@ p {
     display: flex;
     gap: 10px;
     color: #5F6C80;
+    padding: 12px 0px !important;
+    min-height: 30px !important;
 }
 .mat-mdc-select-value-text
  {
@@ -1256,6 +1277,7 @@ p {
       border-radius: 8px;
       .mdc-notched-outline {
     border: 1px solid #253149;
+        border-radius: 8px;
     .mat-mdc-notch-piece {
     border: none;
 }
@@ -1714,12 +1736,12 @@ font-weight: normal !important;
   }
 }
 .signal-latency-chart {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  align-items: end;
-  gap: 10px;
-  height: 170px;
-  padding-top: 8px;
+display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    align-items: end;
+    gap: 10px;
+    height: 230px;
+    padding-top: 0px;
 
   &__bar-col {
     display: flex;

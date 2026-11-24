@@ -25,8 +25,8 @@ export class SidebarComponent {
 
   workspaces: WorkspaceOption[] = [
     { initials: 'NA', name: 'Northstar Labs', plan: 'Enterprise workspace' },
-    { initials: 'SD', name: 'SignalDesk Core', plan: 'Production cluster' },
-    { initials: 'AP', name: 'Apex Payments', plan: 'Sandbox workspace' },
+    { initials: 'NA1', name: 'Northstar Labs1', plan: 'Enterprise workspace1' },
+    { initials: 'NA2', name: 'Northstar Labs2', plan: 'Enterprise workspace2' },
   ];
 
   selectedWorkspace: WorkspaceOption = this.workspaces[0];

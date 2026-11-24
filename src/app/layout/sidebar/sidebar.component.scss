@@ -223,12 +223,13 @@
     }
 
     &__profile {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      min-width: 0;
-      padding-top: 2px;
+display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    padding-top: 15px;
+    border-top: 1px solid #1D293E;
     }
 
     &__avatar {
