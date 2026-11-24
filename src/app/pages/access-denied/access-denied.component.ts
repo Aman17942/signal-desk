@@ -22,6 +22,6 @@ export class AccessDeniedComponent {
       this.router.navigate(['/login']);
       return;
     }
-    this.router.navigate([role === 'ADMIN' ? '/command-center' : '/incidents']);
+    this.router.navigate([role === 'ADMIN' ? '/command-center' : '/command-center']);
   }
 }

@@ -14,7 +14,6 @@
 </app-page-header-strip>
 
 <app-summary-cards [cards]="summaryCards"></app-summary-cards>
-
 <section class="signal-telemetry-row" aria-label="System performance and AI summary">
   <app-reusable-chart
     class="signal-telemetry-row__chart"
@@ -30,7 +29,7 @@
     [strokeWidth]="2"
   >
     <a
-      routerLink="/service-observability"
+      routerLink="/command-center"
       class="signal-telemetry-row__view-link"
     >
       <span>View metrics</span>
@@ -106,7 +105,7 @@
 
      <div class="signal-chart-box__extra">
       <a
-      routerLink=""
+      routerLink="/command-center"
       class="signal-telemetry-row__view-link"
     >
       <span>View all incidents</span>

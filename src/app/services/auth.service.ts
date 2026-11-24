@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 
+import { Injectable } from '@angular/core';
 export type UserRole = 'ADMIN' | 'USER';
 
 export interface AuthUser {
@@ -7,25 +7,55 @@ export interface AuthUser {
   role: UserRole;
 }
 
+interface SignalDeskUser extends AuthUser {
+  password: string;
+  isActive: boolean;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly STORAGE_KEY = 'signaldesk_session';
+  private readonly KEY_STORE = 'signaldesk_login';
 
-  private readonly mockUsers = [
-    { email: 'admin@signaldesk.com', password: 'Admin@123', role: 'ADMIN' as UserRole },
-    { email: 'user@signaldesk.com', password: 'User@123', role: 'USER' as UserRole },
+  private readonly signaldeskUser: SignalDeskUser[] = [
+    {
+      email: 'admin@signaldesk.com',
+      password: 'Admin@123',
+      role: 'ADMIN',
+      isActive: true,
+    },
+    {
+      email: 'user@signaldesk.com',
+      password: 'User@123',
+      role: 'USER',
+      isActive: true,
+    },
   ];
 
-  login(email: string, password: string, rememberMe: boolean): AuthUser | null {
+  login(
+    email: string,
+    password: string,
+    rememberMe: boolean
+  ): { user: AuthUser | null; error: 'INVALID_CREDENTIALS' | 'INACTIVE_ACCOUNT' | null } {
+
     const cleanEmail = email.trim().toLowerCase();
-    const matched = this.mockUsers.find(
-      (u) => u.email === cleanEmail && u.password === password
+
+    const matched = this.signaldeskUser.find(
+      (u) => u.email === cleanEmail
     );
 
-    if (!matched) {
-      return null;
+    if (!matched || matched.password !== password) {
+      return {
+        user: null,
+        error: 'INVALID_CREDENTIALS',
+      };
+    }
+
+    if (!matched.isActive) {
+      return {
+        user: null,
+        error: 'INACTIVE_ACCOUNT',
+      };
     }
 
     const sessionUser: AuthUser = {
@@ -33,19 +63,22 @@ export class AuthService {
       role: matched.role,
     };
 
-    localStorage.removeItem(this.STORAGE_KEY);
-    sessionStorage.removeItem(this.STORAGE_KEY);
-
+    localStorage.removeItem(this.KEY_STORE);
+    sessionStorage.removeItem(this.KEY_STORE);
     const storage = rememberMe ? localStorage : sessionStorage;
-    storage.setItem(this.STORAGE_KEY, JSON.stringify(sessionUser));
 
-    return sessionUser;
+    storage.setItem(this.KEY_STORE, JSON.stringify(sessionUser));
+
+    return {
+      user: sessionUser,
+      error: null,
+    };
   }
 
   getCurrentUser(): AuthUser | null {
     const raw =
-      localStorage.getItem(this.STORAGE_KEY) ||
-      sessionStorage.getItem(this.STORAGE_KEY);
+      localStorage.getItem(this.KEY_STORE) ||
+      sessionStorage.getItem(this.KEY_STORE);
 
     if (!raw) {
       return null;
@@ -67,7 +100,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.STORAGE_KEY);
-    sessionStorage.removeItem(this.STORAGE_KEY);
+    localStorage.removeItem(this.KEY_STORE);
+    sessionStorage.removeItem(this.KEY_STORE);
   }
 }

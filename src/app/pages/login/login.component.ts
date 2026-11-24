@@ -7,7 +7,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HeaderComponent } from '../../layout/header/header.component';
 import { FooterComponent } from '../../layout/footer/footer.component';
@@ -48,39 +47,48 @@ export class LoginComponent {
     this.alerts.splice(index, 1);
   }
 
-  onLogin(): void {
-    this.alerts = [];
+onLogin(): void {
+  this.alerts = [];
+  if (!this.email.trim() || !this.password.trim()) {
+    return;
+  }
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!this.email.trim()) {
-      this.alerts.push('Email address is required.');
-    } else if (!this.email.includes('@')) {
-      this.alerts.push('Please enter a valid email address.');
-       }
+  if (!emailPattern.test(this.email.trim())) {
+    this.alerts = ['Incorrect email or password. Try again.'];
+    return;
+  }
 
-    if (!this.password.trim()) {
-      this.alerts.push('Password is required.');
-    }
+  this.isSubmitting = true;
 
-    if (this.alerts.length > 0) {
+  setTimeout(() => {
+    const result = this.authService.login(
+      this.email,
+      this.password,
+      this.rememberMe
+    );
+
+    this.isSubmitting = false;
+
+    if (!result.user) {
+      if (result.error === 'INACTIVE_ACCOUNT') {
+        this.alerts = [
+          'Account inactive or access restricted. Contact admin.',
+        ];
+      } else {
+        this.alerts = [
+          'Incorrect email or password. Try again.',
+        ];
+      }
       return;
     }
+    const targetRoute =
+      result.user.role === 'ADMIN'
+        ? '/command-center'
+        : '/incidents';
 
-    this.isSubmitting = true;
+    this.router.navigate([targetRoute]);
+  }, 500);
+}
 
-    setTimeout(() => {
-      const user = this.authService.login(
-        this.email,
-        this.password,
-        this.rememberMe
-      );
-            this.isSubmitting = false;
-      if (!user) {
-        this.alerts = ['Incorrect email or password. Try again.'];
-        return;
-      }
-      const targetRoute =
-        user.role === 'ADMIN' ? '/command-center' : '/incidents';
-      this.router.navigate([targetRoute]);
-    }, 500);
-  }
 }

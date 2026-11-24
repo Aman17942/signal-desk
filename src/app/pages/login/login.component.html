@@ -1,9 +1,7 @@
 <div class="signal-auth">
   <main class="signal-auth__main">
     <mat-card class="signal-auth__card">
-      <app-alert
-        *ngFor="let item of alerts; let i = index"
-        [message]="item"
+      <app-alert *ngFor="let item of alerts; let i = index" [message]="item"
         (closed)="dismissAlert(i)"
       ></app-alert>
 
@@ -59,13 +57,11 @@ lock
             <span class="signal-form__checkbox-label">Remember me</span>
           </mat-checkbox>
         </div>
-
         <button
           mat-flat-button
           type="submit"
           class="signal-form__submit"
-          [disabled]="isSubmitting"
-        >
+          [disabled]="isSubmitting">
           <mat-spinner
             *ngIf="isSubmitting"
             diameter="20"

@@ -35,7 +35,6 @@
     </div>
 
   </aside>
-<!-- <app-summary-cards [cards]="incidentSummaryCardsnew" class="six-grid"></app-summary-cards> -->
 <app-summary-cards
 class="six-grid"
   [cards]="incidentSummaryCardsnew"
@@ -75,7 +74,6 @@ class="six-grid"
 
 </section>
 <section class="signal-observability-grid" aria-label="Service telemetry breakdown">
-  <!-- 1. Response time distribution -->
   <article class="signal-chart-box signal-chart-box--card">
     <div class="signal-chart-box__header">
       <div class="signal-chart-box__titles">
@@ -101,8 +99,6 @@ class="six-grid"
       </div>
     </div>
   </article>
-
-  <!-- 2. Error breakdown -->
   <article class="signal-chart-box signal-chart-box--card">
     <div class="signal-chart-box__header">
       <div class="signal-chart-box__titles">
@@ -110,7 +106,6 @@ class="six-grid"
         <p class="signal-chart-box__subtitle">By HTTP status code</p>
       </div>
     </div>
-
     <div class="signal-obs-card__body">
       <ul class="signal-error-list">
         <li
@@ -137,8 +132,6 @@ class="six-grid"
       </ul>
     </div>
   </article>
-
-  <!-- 3. Service dependencies -->
   <article class="signal-chart-box signal-chart-box--card">
     <div class="signal-chart-box__header">
       <div class="signal-chart-box__titles">
@@ -146,15 +139,13 @@ class="six-grid"
         <p class="signal-chart-box__subtitle">Live dependency health</p>
       </div>
     </div>
-
     <div class="signal-obs-card__body signal-obs-card__body--deps">
       <div class="signal-dep-map">
         <svg
           class="signal-dep-map__lines"
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
-          aria-hidden="true"
-        >
+          aria-hidden="true" >
           <line x1="22" y1="22" x2="50" y2="50" class="signal-dep-map__line" />
           <line x1="78" y1="22" x2="50" y2="50" class="signal-dep-map__line" />
           <line x1="22" y1="78" x2="50" y2="50" class="signal-dep-map__line" />
