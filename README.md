@@ -32,20 +32,47 @@ The application provides an organized view of incidents, including their severit
 ## Project Structure
 
 ```text
-signal-desk/
+signaldesk/
 ├── public/
+│   └── favicon.ico
 ├── src/
 │   ├── app/
-│   │   ├── components/
-│   │   ├── ...
+│   │   ├── guards/
+│   │   │   └── auth.guard.ts
+│   │   ├── layout/
+│   │   │   ├── footer/
+│   │   │   ├── header/
+│   │   │   └── sidebar/
+│   │   ├── pages/
+│   │   │   ├── access-denied/
+│   │   │   ├── command_center/
+│   │   │   ├── incidents/
+│   │   │   ├── login/
+│   │   │   ├── page-header-strip/
+│   │   │   └── service_observability/
+│   │   ├── services/
+│   │   │   └── auth.service.ts
+│   │   ├── shared/
+│   │   │   ├── alert/
+│   │   │   └── reusable-chart/
+│   │   ├── app.component.html
+│   │   ├── app.component.scss
+│   │   ├── app.component.spec.ts
+│   │   ├── app.component.ts
+│   │   ├── app.config.ts
+│   │   └── app.routes.ts
 │   ├── assets/
-│   ├── styles.scss
-│   └── main.ts
+│   │   ├── images/
+│   │   └── scss/
+│   ├── index.html
+│   ├── main.ts
+│   └── styles.scss
+├── .editorconfig
 ├── angular.json
 ├── package.json
 ├── package-lock.json
-├── tsconfig.json
-└── README.md
+├── README.md
+└── tsconfig.json
 ```
 
 *Note: The folder structure above is illustrative. Refer to the actual `src/` directory for the complete application structure.*
