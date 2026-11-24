@@ -16,6 +16,7 @@ export interface WorkspaceOption {
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, MatListModule, MatMenuModule],
   templateUrl: './sidebar.component.html',
+  styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent {
   @Input() activeIncidentsCount: number | null = 12;

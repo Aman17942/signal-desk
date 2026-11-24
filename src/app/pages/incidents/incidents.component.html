@@ -113,11 +113,11 @@
               (change)="toggleAll()"
             ></mat-checkbox>
           </th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let element">
             <mat-checkbox
-              [checked]="selection.isSelected(row)"
+              [checked]="selection.isSelected(element)"
               (click)="$event.stopPropagation()"
-              (change)="selection.toggle(row)"
+              (change)="selection.toggle(element)"
             ></mat-checkbox>
           </td>
         </ng-container>
@@ -125,30 +125,30 @@
         <!-- Incident ID -->
         <ng-container matColumnDef="code">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>INCIDENT ID</th>
-          <td mat-cell *matCellDef="let row">
-            <span class="inc-page__code">{{ row.code }}</span>
+          <td mat-cell *matCellDef="let element">
+            <span class="inc-page__code">{{ element.code }}</span>
           </td>
         </ng-container>
 
         <!-- Incident Title -->
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>INCIDENT TITLE</th>
-          <td mat-cell *matCellDef="let row">
-            <div class="inc-page__title">{{ row.title }}</div>
-            <div class="inc-page__env">{{ row.environment }}</div>
+          <td mat-cell *matCellDef="let element">
+            <div class="inc-page__title">{{ element.title }}</div>
+            <div class="inc-page__env">{{ element.environment }}</div>
           </td>
         </ng-container>
 
         <!-- Severity -->
         <ng-container matColumnDef="severity">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>SEVERITY</th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let element">
             <mat-chip
               class="inc-page__badge"
-              [style.--inc-badge]="getSeverityColor(row.severity)"
+              [style.--inc-badge]="getSeverityColor(element.severity)"
               disableRipple
             >
-              {{ row.severity }}
+              {{ element.severity }}
             </mat-chip>
           </td>
         </ng-container>
@@ -156,18 +156,18 @@
         <!-- Service -->
         <ng-container matColumnDef="service">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>AFFECTED SERVICE</th>
-          <td mat-cell *matCellDef="let row">
-            <span class="inc-page__muted">{{ row.service }}</span>
+          <td mat-cell *matCellDef="let element">
+            <span class="inc-page__muted">{{ element.service }}</span>
           </td>
         </ng-container>
 
         <!-- Assignee -->
         <ng-container matColumnDef="assignedTo">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>ASSIGNED TO</th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let element">
             <div class="inc-page__assignee">
-              <span class="inc-page__avatar">{{ getInitials(row.assignedTo) }}</span>
-              <span class="inc-page__muted">{{ row.assignedTo }}</span>
+              <span class="inc-page__avatar">{{ getInitials(element.assignedTo) }}</span>
+              <span class="inc-page__muted">{{ element.assignedTo }}</span>
             </div>
           </td>
         </ng-container>
@@ -175,35 +175,35 @@
         <!-- Created Date -->
         <ng-container matColumnDef="createdAt">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>CREATED</th>
-          <td mat-cell *matCellDef="let row">
-            <span class="inc-page__muted">{{ row.createdAt }}</span>
+          <td mat-cell *matCellDef="let element">
+            <span class="inc-page__muted">{{ element.createdAt }}</span>
           </td>
         </ng-container>
 
         <!-- Duration -->
         <ng-container matColumnDef="duration">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>DURATION</th>
-          <td mat-cell *matCellDef="let row">
-            <span class="inc-page__muted">{{ row.duration }}</span>
+          <td mat-cell *matCellDef="let element">
+            <span class="inc-page__muted">{{ element.duration }}</span>
           </td>
         </ng-container>
 
         <!-- Status -->
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>STATUS</th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let element">
             <mat-chip
               class="inc-page__badge"
-              [style.--inc-badge]="getStatusColor(row.status)"
+              [style.--inc-badge]="getStatusColor(element.status)"
               disableRipple
             >
-              {{ row.status }}
+              {{ element.status }}
             </mat-chip>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="columns"></tr>
-        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+        <tr mat-row *matRowDef="let element; columns: columns"></tr>
 
         <tr *matNoDataRow>
           <td class="inc-page__empty" [attr.colspan]="columns.length">

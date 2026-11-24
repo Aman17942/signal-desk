@@ -106,19 +106,19 @@ export class IncidentListComponent implements OnChanges {
     }
   }
 
-  selectIncident(item: BuiltIncidentItem): void {
-    this.incidentSelected.emit(item);
+  selectIncident(element: BuiltIncidentItem): void {
+    this.incidentSelected.emit(element);
   }
 
   private buildList(): void {
     const source = this.incidents?.length ? this.incidents : DEFAULT_INCIDENTS;
-    this.builtIncidents = source.map((item) => {
-      const severityColor = SEVERITY_COLORS[item.severity] || '#6366f1';
+    this.builtIncidents = source.map((element) => {
+      const severityColor = SEVERITY_COLORS[element.severity] || '#6366f1';
       return {
-        ...item,
+        ...element,
         barColor: severityColor,
         severityColor,
-        statusColor: STATUS_COLORS[item.status] || '#6366f1',
+        statusColor: STATUS_COLORS[element.status] || '#6366f1',
       };
     });
   }

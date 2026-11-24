@@ -227,20 +227,20 @@ export class IncidentsComponent implements OnInit {
           ? 30 * 24 * 60 * 60 * 1000
           : Infinity;
 
-    this.filteredRows = this.allRows.filter((row) => {
+    this.filteredRows = this.allRows.filter((element) => {
       const matchSearch =
         !q ||
-        row.code.toLowerCase().includes(q) ||
-        row.title.toLowerCase().includes(q);
+        element.code.toLowerCase().includes(q) ||
+        element.title.toLowerCase().includes(q);
 
-      const matchSeverity = !this.severity || row.severity === this.severity;
-      const matchStatus = !this.status || row.status === this.status;
-      const matchService = !this.service || row.service === this.service;
-      const matchEnvironment = !this.environment || row.environment === this.environment;
+      const matchSeverity = !this.severity || element.severity === this.severity;
+      const matchStatus = !this.status || element.status === this.status;
+      const matchService = !this.service || element.service === this.service;
+      const matchEnvironment = !this.environment || element.environment === this.environment;
 
       let matchDate = true;
       if (this.dateWindow !== 'all') {
-        const time = Date.parse(row.createdAt);
+        const time = Date.parse(element.createdAt);
         matchDate =
           !Number.isNaN(time) &&
           now - time >= 0 &&
@@ -335,18 +335,18 @@ export class IncidentsComponent implements OnInit {
   isAllSelected(): boolean {
     return (
       this.pagedRows.length > 0 &&
-      this.pagedRows.every((row) => this.selection.isSelected(row))
+      this.pagedRows.every((element) => this.selection.isSelected(element))
     );
   }
 
   toggleAll(): void {
     if (this.isAllSelected()) {
-      this.pagedRows.forEach((row) => {
-        this.selection.deselect(row);
+      this.pagedRows.forEach((element) => {
+        this.selection.deselect(element);
       });
     } else {
-      this.pagedRows.forEach((row) => {
-        this.selection.select(row);
+      this.pagedRows.forEach((element) => {
+        this.selection.select(element);
       });
     }
   }
